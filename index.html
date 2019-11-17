@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+      <title>Clicker</title>
+    </head>
+    <body>
+      <h1>big click hours</h1>
+      <p>
+        $
+        <span id="count"></span>
+      </p>
+      <p>
+        Unused Clicks:
+        <span id="unusedClicks"></span>
+      </p>
+      <div>
+        <button id="click" type="button" onclick="increase()">click</button>
+        <p>
+          Buy more clicks
+          <button type="button" id="buyClicks" onclick="buyClicks()">5</button>
+        </p>
+      </div>
+      <div id="upgrades">
+        <p>
+          Get BIGGER Clicks!
+          <button type="button" name="" id="upgradeClick" onclick="upgradeClick()">10</button>
+        </p>
+        <p id="autoBuySection">
+          Auto Click buyer
+          <button type="button" id="autoBuyer" title="buys clicks for you when you get low" onclick="autoBuyer()">50</button>
+        </p>
+        <div hidden id="catZone">
+          <span id="catCount">No Cats :C</span>
+          <p>Hire Cat:
+          <button type="button" name="Hire Cat" id="hireCat" onclick="hireCat()" title="sometimes clicks mouse for you">100</button>
+          </p>
+        </div>
+      </div>
+
+      <script type="text/javascript" src="src/index.js"></script>
+    </body>
+  </html>
