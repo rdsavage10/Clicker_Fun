@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <link rel="stylesheet" href="src/style.css">
     <meta charset="utf-8">
       <title>Clicker</title>
     </head>
     <body>
       <h1>big click hours</h1>
+      <p id="fps"></p>
       <p>
         $
         <span id="count"></span>
@@ -34,6 +36,11 @@
           <span id="catCount">No Cats :C</span>
           <p>Hire Cat:
           <button type="button" name="Hire Cat" id="hireCat" onclick="hireCat()" title="sometimes clicks mouse for you">100</button>
+          </p>
+          <p>
+            Cat Upgrades:
+            <span id="catUpgradeText"></span>
+            <button type="button" id="catUpgradeButton"></button>
           </p>
         </div>
       </div>

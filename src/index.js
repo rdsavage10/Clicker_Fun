@@ -8,13 +8,20 @@ let upgradeCost = 10
 let catCount = 0
 let catCost = 100
 let catMultiplier = 1
-let catChance = 1
+let loopTicks = 1
+let catUpgradeText = [
+  'Give cats treats for clicking',
+  'Give cats lots of pets',
+  'Buy Catnip',
+  'Increase cat wages',
+  'Make a mouse click leaderboard for which cat has the most clicks',
+]
+let prev_time = 0
 
 // clicking
 function increase() {
   counter += (1 * multiplier)
   unusedClicks--
-  paint()
 }
 
 // buys clicks. duh.
@@ -48,19 +55,28 @@ function hireCat() {
   document.getElementById('hireCat').innerHTML = catCost
 }
 
-function catIncrease() {
-  // counter += (1 * multiplier * internCount)
-  // unusedClicks-= internCount
-  let chance = Math.floor(Math.random() * 100)
-  if (unusedClicks > 0 && chance < catChance) {
-    counter += (catMultiplier * catCount)
-    unusedClicks--
+function catIncrease(count) {
+  if (count > unusedClicks) {
+    count = unusedClicks
   }
+  counter += count
+  unusedClicks -= count
 }
 
-// main game loop
-function paint() {
+function catUpgrade(level) {
 
+}
+
+function fps() {
+  current_time = new Date()
+  current_ms = current_time.getTime()
+  average = 1000 / (current_ms - prev_time)
+  document.getElementById('fps').innerHTML = Math.round(average)
+  prev_time = current_ms
+
+}
+
+function button_update() {
   //flags for disabling buttons
   if (unusedClicks < 1) {
     document.getElementById("click").disabled = true
@@ -88,6 +104,14 @@ function paint() {
     document.getElementById("hireCat").disabled = true
   }
 
+}
+
+// main game loop
+function paint() {
+
+  // temporary fps counter
+  fps()
+
   //auto buying unused clicks
   if (autoBuy === true) {
     if (counter > clickCost && unusedClicks <= 30) {
@@ -97,16 +121,22 @@ function paint() {
 
   // cat section (auto clicking)
   if (catCount !== 0) {
-    catIncrease()
-  } else if (counter >= 100) {
+    if (loopTicks < (100)) {
+      loopTicks++
+    } else {
+      catIncrease(catCount * catMultiplier)
+      loopTicks = 1
+    }
+
+  } else if (counter >= catCost) {
     document.getElementById('catZone').hidden = false
   }
 
   // updating numbers on screen
   document.getElementById("count").innerHTML = counter
   document.getElementById("unusedClicks").innerHTML = unusedClicks
+  window.requestAnimationFrame(paint, button_update)
+
 }
 
-setInterval(function() {
-  paint()
-}, 100)
+window.requestAnimationFrame(paint, button_update)
