@@ -108,7 +108,7 @@ function button_update() {
 
 // main game loop
 function paint() {
-
+  button_update()
   // temporary fps counter
   fps()
 
@@ -135,8 +135,8 @@ function paint() {
   // updating numbers on screen
   document.getElementById("count").innerHTML = counter
   document.getElementById("unusedClicks").innerHTML = unusedClicks
-  window.requestAnimationFrame(paint, button_update)
+  window.requestAnimationFrame(paint)
 
 }
 
-window.requestAnimationFrame(paint, button_update)
+window.requestAnimationFrame(paint)
