@@ -1,4 +1,5 @@
 // lets declare some variables
+let total = 0
 let counter = 0
 let unusedClicks = 50
 let autoBuy = false
@@ -9,18 +10,25 @@ let catCount = 0
 let catCost = 100
 let catMultiplier = 1
 let loopTicks = 1
-let catUpgradeText = [
-  'Give cats treats for clicking',
-  'Give cats lots of pets',
-  'Buy Catnip',
-  'Increase cat wages',
-  'Make a mouse click leaderboard for which cat has the most clicks',
-]
+let secondTimer = 1
+let minuteTimer = 1
+let secPrevTotal = 0
+let minPrevTotal = 0
+let catLevel = 0
 let prev_time = 0
+// let catUpgradeText = [
+//   'Give cats treats for clicking',
+//   'Give cats lots of pets',
+//   'Buy Catnip',
+//   'Increase cat treats',
+//   'Make a mouse click leaderboard for which cat has the most clicks',
+// ]
 
 // clicking
 function increase() {
   counter += (1 * multiplier)
+  total += (1 * multiplier)
+
   unusedClicks--
 }
 
@@ -38,6 +46,24 @@ function upgradeClick() {
   counter -= upgradeCost
   upgradeCost = Math.floor(upgradeCost * 1.5)
   document.getElementById("upgradeClick").innerHTML = upgradeCost
+  document.getElementById("click").innerHTML = "+" + multiplier + " Clicks"
+}
+
+//revenue per minute
+function clicksPerMinute() {
+  secondTimer++
+  minuteTimer++
+  if (secondTimer >= 300) {
+    document.getElementById('clickPerSecond').innerHTML = (total - secPrevTotal) / 5
+    secPrevTotal = total
+    secondTimer = 1
+  }
+  if (minuteTimer >= 600) {
+    document.getElementById('clickPerMinute').innerHTML = (total - minPrevTotal) * 6
+    minPrevTotal = total
+    minuteTimer = 1
+  }
+
 }
 
 // this auto buys clicks
@@ -60,6 +86,7 @@ function catIncrease(count) {
     count = unusedClicks
   }
   counter += count
+  total += count
   unusedClicks -= count
 }
 
@@ -73,7 +100,6 @@ function fps() {
   average = 1000 / (current_ms - prev_time)
   document.getElementById('fps').innerHTML = Math.round(average)
   prev_time = current_ms
-
 }
 
 function button_update() {
@@ -111,7 +137,7 @@ function paint() {
   button_update()
   // temporary fps counter
   fps()
-
+  clicksPerMinute()
   //auto buying unused clicks
   if (autoBuy === true) {
     if (counter > clickCost && unusedClicks <= 30) {
