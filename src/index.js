@@ -2,8 +2,8 @@
 let total = 0
 let counter = 0
 let unusedClicks = 50
-let autoBuy = false
-let multiplier = 1
+let autoBuying = false
+let multiplier = 100
 let clickCost = 5
 let upgradeCost = 10
 let catCount = 0
@@ -46,7 +46,7 @@ function upgradeClick() {
   counter -= upgradeCost
   upgradeCost = Math.floor(upgradeCost * 1.5)
   document.getElementById("upgradeClick").innerHTML = upgradeCost
-  document.getElementById("click").innerHTML = "+" + multiplier + " Clicks"
+  document.getElementById("click").innerHTML = "+$" + multiplier
 }
 
 //revenue per minute
@@ -67,10 +67,21 @@ function clicksPerMinute() {
 }
 
 // this auto buys clicks
-function autoBuyer() {
-  autoBuy = true
+function autoBuy() {
+  autoBuying = true
   counter -= 50
   document.getElementById('autoBuySection').hidden = true
+  document.getElementById('autoBuyToggleSection').hidden = false
+}
+
+function autoBuyToggle() {
+  if (autoBuying === true) {
+    autoBuying = false;
+    document.getElementById('autoBuyToggle').innerHTML = "Off"
+  } else {
+    autoBuying = true;
+    document.getElementById('autoBuyToggle').innerHTML = "On"
+  }
 }
 
 function hireCat() {
@@ -110,9 +121,9 @@ function button_update() {
     document.getElementById("click").disabled = false
   }
   if (50 <= counter) {
-    document.getElementById("autoBuyer").disabled = false
+    document.getElementById("autoBuy").disabled = false
   } else {
-    document.getElementById("autoBuyer").disabled = true
+    document.getElementById("autoBuy").disabled = true
   }
   if (upgradeCost <= counter) {
     document.getElementById("upgradeClick").disabled = false
@@ -139,7 +150,7 @@ function paint() {
   fps()
   clicksPerMinute()
   //auto buying unused clicks
-  if (autoBuy === true) {
+  if (autoBuying === true) {
     if (counter > clickCost && unusedClicks <= 30) {
       buyClicks()
     }

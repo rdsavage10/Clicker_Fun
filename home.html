@@ -27,7 +27,7 @@
     <span id="unusedClicks"></span>
   </p>
   <div>
-    <button id="click" type="button" onclick="increase()">click</button>
+    <button id="click" type="button" onclick="increase()">+ $1</button> / click
     <p>
       Buy more clicks
       <button type="button" id="buyClicks" onclick="buyClicks()">5</button>
@@ -40,8 +40,13 @@
     </p>
     <p id="autoBuySection">
       Auto Click buyer
-      <button type="button" id="autoBuyer" title="buys clicks for you when you get low" onclick="autoBuyer()">50</button>
+      <button type="button" id="autoBuy" title="buys clicks for you when you get low" onclick="autoBuy()">50</button>
     </p>
+    <div id="autoBuyToggleSection" hidden>
+      Auto Buying:
+      <button type="button" id="autoBuyToggle" onclick="autoBuyToggle()">On</button>
+    </div>
+
     <div hidden id="catZone">
       <span id="catCount">No Cats :(</span>
       <p>Hire Cat:
