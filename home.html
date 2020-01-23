@@ -55,9 +55,18 @@
       <p>
         Cat Upgrades:
         <span id="catUpgradeText"></span>
-        <button type="button" id="catUpgradeButton">update text goes here</button>
+        <button type="button" id="catUpgradeButton">update text goes here when ready</button>
       </p>
     </div>
+    <div hidden id="themestore">
+      <button id="theme1" onclick="changeTheme(themes.theme0)">default theme</button>
+      <button id="theme1" onclick="changeTheme(themes.theme1)">dark theme</button>
+      <button id="theme1" onclick="changeTheme(themes.theme2)">other theme</button>
+      <button id="theme1" onclick="changeTheme(themes.theme3)">last theme</button>
+    </div>
+  </div>
+  <div hidden id="themes">
+
   </div>
 
   <script type="text/javascript" src="src/index.js"></script>

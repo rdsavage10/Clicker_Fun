@@ -1,12 +1,32 @@
+:root {
+  --main-text-color: black;
+  --body-background: white;
+  --font-family: "Times New Roman", Times, serif;
+}
+
+body {
+  font-size: 100%;
+  background: var(--body-background);
+  font-family: var(--font-family);
+  color: var(--main-text-color)
+}
+
 #fps {
   position: absolute;
   top: 8px;
   right: 16px;
-  font-size: 18px;
+  font-size: 1.125;
 }
-h1 {
-  
+
+h2 {
+  /* text-align: center; */
+  font-size: 4vw;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
-body {
-  background: rgb(179, 179, 179);
+div {
+  font-size: 1.5vw;
+}
+p {
+  font-size: 1.5vw;
 }
