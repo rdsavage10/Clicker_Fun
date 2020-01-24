@@ -16,10 +16,8 @@ let minuteTimer = 1;
 let secPrevTotal = 0;
 let minPrevTotal = 0;
 let catLevel = 0;
-let current_time;
-let current_ms;
-let prev_ms = 0;
-let prev_times = [];
+let frameCount = 0;
+let prev_ms = new Date().getMilliseconds();
 // const catUpgradeText = [
 //   'Give cats treats for clicking',
 //   'Give cats lots of pets',
@@ -136,19 +134,16 @@ function catUpgrade(level) {
 
 }
 
-function fps() {
-  current_time = new Date();
-  current_ms = current_time.getTime();
-
-  average = 1000 / current_ms - prev_ms;
-  prev_times.push(current_ms);
-  if (prev_times.length >= 100) {
-    prev_times = prev_times.reduce((a,b) => a + b) / prev_times.length;
-    // console.log(prev_time);
-
-    fpsSpan.text(Math.round(average));
-    prev_times = [];
+function findFPS() {
+  // let prev_ms = new Date().getMilliseconds();
+  let current_ms = new Date().getMilliseconds();
+  if (prev_ms > current_ms) {
+    fpsSpan.text(frameCount);
+    frameCount = -1;
   }
+  frameCount++;
+  prev_ms = current_ms;
+
 }
 
 function button_update() {
@@ -179,7 +174,7 @@ function button_update() {
 function paint() {
   button_update();
   // temporary fps counter
-  fps();
+  findFPS();
   clicksPerMinute();
   //auto buying unused clicks
   if (autoBuying === true) {
