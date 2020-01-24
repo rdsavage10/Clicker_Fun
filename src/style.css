@@ -4,6 +4,26 @@
   --font-family: "Times New Roman", Times, serif;
 }
 
+.theme-main {
+  color: black;
+  background-color: white;
+
+}
+
+.theme-dark {
+  color: white;
+  background-color: black;
+}
+.theme-3 {
+  color: grey;
+  background-color: blue;
+}
+
+.theme-4 {
+  color: red;
+  background-color: white;
+}
+
 body {
   font-size: 100%;
   background: var(--body-background);
@@ -20,13 +40,19 @@ body {
 
 h2 {
   /* text-align: center; */
-  font-size: 4vw;
+  /* font-size: 4vw; */
   margin-top: 0px;
   margin-bottom: 0px;
 }
+
 div {
-  font-size: 1.5vw;
+  /* font-size: 1.5vw; */
 }
+
 p {
-  font-size: 1.5vw;
+  /* font-size: 1.5vw; */
+}
+
+.main-heading {
+  
 }

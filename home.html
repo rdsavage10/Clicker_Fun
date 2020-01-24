@@ -4,44 +4,48 @@
 <head>
   <link rel="stylesheet" href="src/style.css">
   <meta charset="utf-8">
+  <script
+    src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+    crossorigin="anonymous">
+  </script>
   <title>Clicker</title>
 </head>
 
-<body>
-  <h2>Clicker Fun</h2>
-  <p id="fps"></p>
-  <p>
+<body class="theme-main">
+  <h2 class=main-heading>Clicker Fun</h2>
+  <div id="fps"></div>
     $
-    <span id="count"></span>
-  </p>
-  <p>
+    <span id="wallet"></span>
+
+  <div>
     <span id="clickPerSecond"> 0 </span>
     clicks per second
   </p>
-  <p>
+  <div>
     <span id="clickPerMinute"> 0 </span>
     clicks per minute
   </p>
-  <p>
+  <div>
     Unused Clicks:
     <span id="unusedClicks"></span>
   </p>
   <div>
     <button id="click" type="button" onclick="increase()">+ $1</button> / click
-    <p>
+    <div>
       Buy more clicks
       <button type="button" id="buyClicks" onclick="buyClicks()">5</button>
     </p>
   </div>
   <div id="upgrades">
-    <p>
+    <div>
       Get BIGGER Clicks!
       <button type="button" name="" id="upgradeClick" onclick="upgradeClick()">10</button>
     </p>
-    <p id="autoBuySection">
+    <div id="autoBuySection">
       Auto Click buyer
-      <button type="button" id="autoBuy" title="buys clicks for you when you get low" onclick="autoBuy()">50</button>
-    </p>
+      <button type="button" id="autoBuyUnlock" title="buys clicks for you when you get low" onclick="autoBuy()">50</button>
+    </div>
     <div id="autoBuyToggleSection" hidden>
       Auto Buying:
       <button type="button" id="autoBuyToggle" onclick="autoBuyToggle()">On</button>
@@ -49,20 +53,20 @@
 
     <div hidden id="catZone">
       <span id="catCount">No Cats :(</span>
-      <p>Hire Cat:
+      <div>Hire Cat:
         <button type="button" name="Hire Cat" id="hireCat" onclick="hireCat()" title="sometimes clicks mouse for you">100</button>
       </p>
-      <p>
+      <div>
         Cat Upgrades:
         <span id="catUpgradeText"></span>
         <button type="button" id="catUpgradeButton">update text goes here when ready</button>
       </p>
     </div>
     <div hidden id="themestore">
-      <button id="theme1" onclick="changeTheme(themes.theme0)">default theme</button>
-      <button id="theme1" onclick="changeTheme(themes.theme1)">dark theme</button>
-      <button id="theme1" onclick="changeTheme(themes.theme2)">other theme</button>
-      <button id="theme1" onclick="changeTheme(themes.theme3)">last theme</button>
+      <button id="theme-main" class="theme-button">default theme</button>
+      <button id="theme-dark" class="theme-button">dark theme</button>
+      <button id="theme-3" class="theme-button">other theme</button>
+      <button id="theme-4" class="theme-button">last theme</button>
     </div>
   </div>
   <div hidden id="themes">
