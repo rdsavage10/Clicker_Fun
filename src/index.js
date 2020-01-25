@@ -2,6 +2,7 @@
 // lets declare some variables
 let total = 0;
 let counter = 0;
+let prev_counter;
 let unusedClicks = 50;
 let autoBuying = false;
 let multiplier = 100;
@@ -17,6 +18,7 @@ let secPrevTotal = 0;
 let minPrevTotal = 0;
 let catLevel = 0;
 let frameCount = 0;
+let lastFrameCount = 0;
 let prev_ms = new Date().getMilliseconds();
 // const catUpgradeText = [
 //   'Give cats treats for clicking',
@@ -25,7 +27,7 @@ let prev_ms = new Date().getMilliseconds();
 //   'Increase cat treats',
 //   'Make a mouse click leaderboard for which cat has the most clicks',
 // ];
-
+//jquery variables
 const clickButton = $("#click");
 const buyClickButton = $("#buyClicks");
 const upgradeClickButton = $("#upgradeClick");
@@ -40,15 +42,6 @@ const fpsSpan = $('#fps');
 const autoBuyUnlockButton = $("#autoBuyUnlock");
 const themestoreButton = $("#themestore");
 
-
-//shortcut for changing button disabled state
-function buttonDisabled(element, bool) {
-  if (bool) {
-    element.prop("disabled", true);
-  } else {
-    element.prop("disabled", false);
-  }
-}
 
 // change active theme
 function changeTheme(id) {
@@ -118,7 +111,7 @@ function hireCat() {
   counter -= catCost;
   catCost += 25;
   catCountSpan.text(catCount + " cats");
-  hireCat.text(catCost);
+  hireCatButton.text(catCost);
 }
 
 function catIncrease(count) {
@@ -138,7 +131,10 @@ function findFPS() {
   // let prev_ms = new Date().getMilliseconds();
   let current_ms = new Date().getMilliseconds();
   if (prev_ms > current_ms) {
-    fpsSpan.text(frameCount);
+    if (frameCount !== lastFrameCount) {
+      fpsSpan.text(frameCount);
+    }
+    lastFrameCount = frameCount;
     frameCount = -1;
   }
   frameCount++;
@@ -148,26 +144,34 @@ function findFPS() {
 
 function button_update() {
   //flags for disabling buttons
-  if (unusedClicks < 1) {
-    buttonDisabled(clickButton, true);
-  } else {
-    buttonDisabled(clickButton, false);
-  }
-  if (50 <= counter) {
-    buttonDisabled(autoBuyUnlockButton);
-  }
-  if (upgradeCost <= counter) {
-    buttonDisabled(upgradeClickButton);
-  }
-  if (clickCost <= counter) {
-    buttonDisabled(buyClickButton);
-  }
-  if (catCost <= counter) {
-    buttonDisabled(hireCatButton);
-  }
-  // if (themes.theme1.cost <= counter) {
-  //   buttonDisabled(themestore)
-  // }
+    if (unusedClicks < 1) {
+      clickButton.attr('disabled', true);
+    } else {
+      clickButton.attr('disabled', false);
+    }
+    if (50 <= counter) {
+      autoBuyUnlockButton.attr('disabled', false);
+    } else {
+      autoBuyUnlockButton.attr('disabled', true);
+    }
+    if (upgradeCost <= counter) {
+      upgradeClickButton.attr('disabled', false);
+    } else {
+      upgradeClickButton.attr('disabled', true);
+    }
+    if (clickCost <= counter) {
+      buyClickButton.attr('disabled', false);
+    } else {
+      buyClickButton.attr('disabled', true);
+    }
+    if (catCost <= counter) {
+      hireCatButton.attr('disabled', false);
+    } else {
+      hireCatButton.attr('disabled', true);
+    }
+    // if (themes.theme1.cost <= counter) {
+    //   buttonDisabled(themestore)
+    // }
 }
 
 // main game loop
