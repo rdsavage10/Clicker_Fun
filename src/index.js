@@ -1,8 +1,8 @@
 /*jshint esversion: 6 */
 // lets declare some variables
 let total = 0;
+let prevTotal = 0;
 let counter = 0;
-let prevCounter = 0;
 let unusedClicks = 50;
 let autoBuying = false;
 let multiplier = 100;
@@ -12,16 +12,14 @@ let catCount = 0;
 let catCost = 100;
 let catMultiplier = 1;
 let loopTicks = 1;
-// let secondTimer = 1;
-// let minuteTimer = 1;
 let avgClicks = 0;
 let newClicks = 0;
 const avgArr = [];
-// let minPrevTotal = 0;
 let catLevel = 0;
 let frameCount = 0;
 let lastFrameCount = 0;
 let prevMS = new Date().getMilliseconds();
+
 // const catUpgradeText = [
 //   'Give cats treats for clicking',
 //   'Give cats lots of pets',
@@ -29,6 +27,7 @@ let prevMS = new Date().getMilliseconds();
 //   'Increase cat treats',
 //   'Make a mouse click leaderboard for which cat has the most clicks',
 // ];
+
 //jquery variables
 const clickButton = $("#click");
 const buyClickButton = $("#buyClicks");
@@ -44,18 +43,6 @@ const fpsSpan = $('#fps');
 const autoBuyUnlockButton = $("#autoBuyUnlock");
 const themestoreButton = $("#themestore");
 
-function clicksPerMinute() {
-    newClicks = counter - prevCounter;
-    prevCounter = counter;
-    avgArr.push(avgClicks);
-    if (avgArr.length > 10) {
-      avgArr.splice(0,1);
-    }
-    avgClicks = avgArr.reduce((a,b) => a + b) / avgArr.length ;
-    clickPerSecond.text(avgClicks);
-    prevCounter = counter;
-    console.log(avgClicks);
-}
 
 // change active theme
 function changeTheme(id) {
@@ -87,20 +74,17 @@ function upgradeClick() {
 }
 
 //revenue per minute
-// function clicksPerMinute() {
-//   secondTimer++;
-//   minuteTimer++;
-//   if (secondTimer >= 300) {
-//     clickPerSecond.text((total - secPrevTotal) / 5);
-//     secPrevTotal = total;
-//     secondTimer = 1;
-//   }
-//   if (minuteTimer >= 600) {
-//     clickPerMinute.text((total - minPrevTotal) * 6);
-//     minPrevTotal = total;
-//     minuteTimer = 1;
-//   }
-// }
+function avgClickRate() {
+  newClicks = total - prevTotal;
+  prevTotal = total;
+  avgArr.push(newClicks);
+  if (avgArr.length > 10) {
+    avgArr.splice(0,1);
+  }
+  avgClicks = avgArr.reduce((a,b) => a + b) / avgArr.length ;
+  clickPerSecond.text(Math.round(avgClicks));
+  prevCounter = counter;
+}
 
 
 // this auto buys clicks
@@ -198,7 +182,7 @@ function paint() {
   //clicks per second
   if (loopTicks > 60) {
     loopTicks = 1;
-    clicksPerMinute();
+    avgClickRate();
   } else {
     loopTicks++;
   }
@@ -232,8 +216,12 @@ function paint() {
 
 /* add all event listeners */
 $(document).ready(function() {
+
+  
+
   $('button.theme-button').on('click', function(e) {
     changeTheme(e.currentTarget.id);
   });
+
   window.requestAnimationFrame(paint);
 });
