@@ -2,7 +2,7 @@
 // lets declare some variables
 let total = 0;
 let counter = 0;
-let prev_counter;
+let prevCounter = 0;
 let unusedClicks = 50;
 let autoBuying = false;
 let multiplier = 100;
@@ -12,14 +12,16 @@ let catCount = 0;
 let catCost = 100;
 let catMultiplier = 1;
 let loopTicks = 1;
-let secondTimer = 1;
-let minuteTimer = 1;
-let secPrevTotal = 0;
-let minPrevTotal = 0;
+// let secondTimer = 1;
+// let minuteTimer = 1;
+let avgClicks = 0;
+let newClicks = 0;
+const avgArr = [];
+// let minPrevTotal = 0;
 let catLevel = 0;
 let frameCount = 0;
 let lastFrameCount = 0;
-let prev_ms = new Date().getMilliseconds();
+let prevMS = new Date().getMilliseconds();
 // const catUpgradeText = [
 //   'Give cats treats for clicking',
 //   'Give cats lots of pets',
@@ -42,6 +44,18 @@ const fpsSpan = $('#fps');
 const autoBuyUnlockButton = $("#autoBuyUnlock");
 const themestoreButton = $("#themestore");
 
+function clicksPerMinute() {
+    newClicks = counter - prevCounter;
+    prevCounter = counter;
+    avgArr.push(avgClicks);
+    if (avgArr.length > 10) {
+      avgArr.splice(0,1);
+    }
+    avgClicks = avgArr.reduce((a,b) => a + b) / avgArr.length ;
+    clickPerSecond.text(avgClicks);
+    prevCounter = counter;
+    console.log(avgClicks);
+}
 
 // change active theme
 function changeTheme(id) {
@@ -73,26 +87,28 @@ function upgradeClick() {
 }
 
 //revenue per minute
-function clicksPerMinute() {
-  secondTimer++;
-  minuteTimer++;
-  if (secondTimer >= 300) {
-    clickPerSecond.text((total - secPrevTotal) / 5);
-    secPrevTotal = total;
-    secondTimer = 1;
-  }
-  if (minuteTimer >= 600) {
-    clickPerMinute.text((total - minPrevTotal) * 6);
-    minPrevTotal = total;
-    minuteTimer = 1;
-  }
-}
+// function clicksPerMinute() {
+//   secondTimer++;
+//   minuteTimer++;
+//   if (secondTimer >= 300) {
+//     clickPerSecond.text((total - secPrevTotal) / 5);
+//     secPrevTotal = total;
+//     secondTimer = 1;
+//   }
+//   if (minuteTimer >= 600) {
+//     clickPerMinute.text((total - minPrevTotal) * 6);
+//     minPrevTotal = total;
+//     minuteTimer = 1;
+//   }
+// }
+
 
 // this auto buys clicks
 function autoBuy() {
   autoBuying = true;
   autoBuySection.hide();
   autoBuyToggleSection.show();
+
 }
 
 function autoBuyToggle() {
@@ -128,9 +144,9 @@ function catUpgrade(level) {
 }
 
 function findFPS() {
-  // let prev_ms = new Date().getMilliseconds();
-  let current_ms = new Date().getMilliseconds();
-  if (prev_ms > current_ms) {
+  // let prevMS = new Date().getMilliseconds();
+  let currentMS = new Date().getMilliseconds();
+  if (prevMS > currentMS) {
     if (frameCount !== lastFrameCount) {
       fpsSpan.text(frameCount);
     }
@@ -138,7 +154,7 @@ function findFPS() {
     frameCount = -1;
   }
   frameCount++;
-  prev_ms = current_ms;
+  prevMS = currentMS;
 
 }
 
@@ -177,9 +193,15 @@ function button_update() {
 // main game loop
 function paint() {
   button_update();
-  // temporary fps counter
+  //fps counter
   findFPS();
-  clicksPerMinute();
+  //clicks per second
+  if (loopTicks > 60) {
+    loopTicks = 1;
+    clicksPerMinute();
+  } else {
+    loopTicks++;
+  }
   //auto buying unused clicks
   if (autoBuying === true) {
     if (counter > clickCost && unusedClicks <= 30) {
@@ -189,13 +211,9 @@ function paint() {
 
   // cat section (auto clicking)
   if (catCount !== 0) {
-    if (loopTicks < (100)) {
-      loopTicks++;
-    } else {
+    if (loopTicks === 60) {
       catIncrease(catCount * catMultiplier);
-      loopTicks = 1;
     }
-
   } else if (counter >= catCost) {
     $('#catZone').show();
   }

@@ -46,13 +46,19 @@ h2 {
 }
 
 div {
-  /* font-size: 1.5vw; */
+  /* font-size: 1.33; */
 }
 
 p {
-  /* font-size: 1.5vw; */
+  /* font-size: 1.33; */
 }
 
 .main-heading {
+
+}
+
+.box {
+  /* border-bottom: groove; */
+  margin-top: 2%;
   
 }

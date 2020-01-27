@@ -4,10 +4,7 @@
 <head>
   <link rel="stylesheet" href="src/style.css">
   <meta charset="utf-8">
-  <script
-    src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
-    crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous">
   </script>
   <title>Clicker</title>
 </head>
@@ -15,33 +12,37 @@
 <body class="theme-main">
   <h2 class=main-heading>Clicker Fun</h2>
   <div id="fps"></div>
-    $
-    <span id="wallet"></span>
+  <div class="box">
+    $ <span id="wallet"></span>
+  </div>
 
-  <div>
-    <span id="clickPerSecond"> 0 </span>
-    clicks per second
-  </p>
-  <div>
-    <span id="clickPerMinute"> 0 </span>
-    clicks per minute
-  </p>
-  <div>
-    Unused Clicks:
-    <span id="unusedClicks"></span>
-  </p>
-  <div>
+  <div class="box" id="clickSpeedSection">
+    <div>
+      <span id="clickPerSecond"> 0 </span>
+      clicks per second
+    </div>
+    <div>
+      <span id="clickPerMinute"> 0 </span>
+      clicks per minute
+    </div>
+    <div>
+      Unused Clicks:
+      <span id="unusedClicks"></span>
+    </div>
+  </div>
+
+  <div class="box">
     <button id="click" type="button" onclick="increase()">+ $1</button> / click
     <div>
       Buy more clicks
       <button type="button" id="buyClicks" onclick="buyClicks()">5</button>
-    </p>
+    </div>
   </div>
-  <div id="upgrades">
+  <div class="box" id="upgrades">
     <div>
       Get BIGGER Clicks!
       <button type="button" name="" id="upgradeClick" onclick="upgradeClick()">10</button>
-    </p>
+    </div>
     <div id="autoBuySection">
       Auto Click buyer
       <button type="button" id="autoBuyUnlock" title="buys clicks for you when you get low" onclick="autoBuy()">50</button>
@@ -51,27 +52,27 @@
       <button type="button" id="autoBuyToggle" onclick="autoBuyToggle()">On</button>
     </div>
 
-    <div hidden id="catZone">
+    <div hidden id="catZone" class="box">
       <span id="catCount">No Cats :(</span>
       <div>Hire Cat:
         <button type="button" name="Hire Cat" id="hireCat" onclick="hireCat()" title="sometimes clicks mouse for you">100</button>
-      </p>
+      </div>
       <div>
         Cat Upgrades:
         <span id="catUpgradeText"></span>
         <button type="button" id="catUpgradeButton">update text goes here when ready</button>
-      </p>
+      </div>
     </div>
-    <div hidden id="themestore">
-      <button id="theme-main" class="theme-button">default theme</button>
-      <button id="theme-dark" class="theme-button">dark theme</button>
-      <button id="theme-3" class="theme-button">other theme</button>
-      <button id="theme-4" class="theme-button">last theme</button>
+    <div hidden id="themestore" class="box">
+      <li><button id="theme-main" class="theme-button">default theme</button></li>
+      <li><button id="theme-dark" class="theme-button">dark theme</button></li>
+      <li><button id="theme-3" class="theme-button">other theme</button></li>
+      <li><button id="theme-4" class="theme-button">last theme</button></li>
     </div>
   </div>
-  <div hidden id="themes">
+  <ul hidden id="themes" class="box">
 
-  </div>
+  </ul>
 
   <script type="text/javascript" src="src/index.js"></script>
 </body>
