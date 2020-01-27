@@ -5,7 +5,7 @@ let prevTotal = 0;
 let counter = 0;
 let unusedClicks = 50;
 let autoBuying = false;
-let multiplier = 100;
+let multiplier = 1;
 let clickCost = 5;
 let upgradeCost = 10;
 let catCount = 0;
@@ -217,7 +217,7 @@ function paint() {
 /* add all event listeners */
 $(document).ready(function() {
 
-  
+
 
   $('button.theme-button').on('click', function(e) {
     changeTheme(e.currentTarget.id);
