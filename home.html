@@ -18,13 +18,13 @@
 
   <div class="box" id="clickSpeedSection">
     <div>
-      <span id="clickPerSecond"> 0 </span>
+      <span id="avgClickSpan"> 0 </span>
       clicks per second
     </div>
-    <div>
+    <!-- <div>
       <span id="clickPerMinute"> 0 </span>
       clicks per minute
-    </div>
+    </div> -->
     <div>
       Unused Clicks:
       <span id="unusedClicks"></span>
@@ -32,30 +32,30 @@
   </div>
 
   <div class="box">
-    <button id="click" type="button" onclick="increase()">+ $1</button> / click
+    <button id="click" type="button">+ $1</button> / click
     <div>
       Buy more clicks
-      <button type="button" id="buyClicks" onclick="buyClicks()">5</button>
+      <button type="button" id="buyClicks">5</button>
     </div>
   </div>
   <div class="box" id="upgrades">
     <div>
       Get BIGGER Clicks!
-      <button type="button" name="" id="upgradeClick" onclick="upgradeClick()">10</button>
+      <button type="button" name="" id="upgradeClick">10</button>
     </div>
     <div id="autoBuySection">
       Auto Click buyer
-      <button type="button" id="autoBuyUnlock" title="buys clicks for you when you get low" onclick="autoBuy()">50</button>
+      <button type="button" id="autoBuyUnlock" title="buys clicks for you when you get low">50</button>
     </div>
     <div id="autoBuyToggleSection" hidden>
       Auto Buying:
-      <button type="button" id="autoBuyToggle" onclick="autoBuyToggle()">On</button>
+      <button type="button" id="autoBuyToggle">On</button>
     </div>
 
     <div hidden id="catZone" class="box">
       <span id="catCount">No Cats :(</span>
       <div>Hire Cat:
-        <button type="button" name="Hire Cat" id="hireCat" onclick="hireCat()" title="sometimes clicks mouse for you">100</button>
+        <button type="button" name="Hire Cat" id="hireCat" title="sometimes clicks mouse for you">100</button>
       </div>
       <div>
         Cat Upgrades:
@@ -64,15 +64,17 @@
       </div>
     </div>
     <div hidden id="themestore" class="box">
-      <li><button id="theme-main" class="theme-button">Default theme</button></li>
-      <li><button id="theme-dark" class="theme-button">Dark theme</button></li>
-      <li><button id="theme-3" class="theme-button">Ocean theme</button></li>
-      <li><button id="theme-4" class="theme-button">Red theme</button></li>
+      <li> Buy Dark Theme<button type="button" id="buy-dark-theme">100</button> </li>
+      <li> Buy Ocean Theme<button type="button" id="buy-ocean-theme">100</button> </li>
+      <li> Buy Red Theme<button type="button" id="buy-red-theme">100</button> </li>
     </div>
   </div>
-  <ul hidden id="themes" class="box">
-
-  </ul>
+  <div  id="themes" class="box">
+    <li><button id="theme-main" class="theme-button">Default theme</button></li>
+    <li><button id="theme-dark" class="theme-button">Dark theme</button></li>
+    <li><button id="theme-3" class="theme-button">Ocean theme</button></li>
+    <li><button id="theme-4" class="theme-button">Red theme</button></li>
+  </div>
 
   <script type="text/javascript" src="src/index.js"></script>
 </body>
