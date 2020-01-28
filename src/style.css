@@ -12,16 +12,19 @@
 
 .theme-dark {
   color: white;
-  background-color: black;
+  background-color: #363636;
 }
 .theme-3 {
-  color: grey;
-  background-color: blue;
+  color: white;
+  /* background-image: linear-gradient(#4287f5,#424bf5); */
+  background-image: linear-gradient(#78a3ff,#787fff);
+  min-height: 100vh;
+  /* background-color: blue; */
 }
 
 .theme-4 {
   color: red;
-  background-color: white;
+  background-color: #ffe6e6;
 }
 
 body {
@@ -60,5 +63,5 @@ p {
 .box {
   /* border-bottom: groove; */
   margin-top: 2%;
-  
+
 }

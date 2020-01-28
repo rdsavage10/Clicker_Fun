@@ -32,8 +32,8 @@ let prevMS = new Date().getMilliseconds();
 const clickButton = $("#click");
 const buyClickButton = $("#buyClicks");
 const upgradeClickButton = $("#upgradeClick");
-const clickPerSecond = $('#clickPerSecond');
-const clickPerMinute = $('#clickPerMinute');
+const clickPerSecond = $('#avgClickSpan');
+// const clickPerMinute = $('#clickPerMinute');
 const autoBuySection = $('#autoBuySection');
 const autoBuyToggleSection = $('#autoBuyToggleSection');
 const autoBuyToggleButton = $('#autoBuyToggle');
@@ -169,9 +169,11 @@ function button_update() {
     } else {
       hireCatButton.attr('disabled', true);
     }
-    // if (themes.theme1.cost <= counter) {
-    //   buttonDisabled(themestore)
-    // }
+    if (100 <= counter) {
+      themestoreButton.attr('disabled', false);
+    } else {
+      themestoreButton.attr('disabled', true);
+    }
 }
 
 // main game loop
@@ -217,7 +219,41 @@ function paint() {
 /* add all event listeners */
 $(document).ready(function() {
 
-  
+  clickButton.on('click', function() {
+    increase();
+  });
+
+  buyClickButton.on('click', function() {
+    buyClicks();
+  });
+
+  upgradeClickButton.on('click', function() {
+    upgradeClick();
+  });
+  autoBuyUnlockButton.on('click', function() {
+    autoBuy();
+  });
+  autoBuyToggleButton.on('click', function() {
+    autoBuyToggle();
+  });
+  hireCatButton.on('click', function() {
+    hireCat();
+  });
+
+  // .on('click', function() {
+  //
+  // });
+
+
+
+
+  // .on('click', function() {
+  //
+  // });
+
+
+
+
 
   $('button.theme-button').on('click', function(e) {
     changeTheme(e.currentTarget.id);
