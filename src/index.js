@@ -219,8 +219,6 @@ function paint() {
 /* add all event listeners */
 $(document).ready(function() {
 
-<<<<<<< HEAD
-=======
   clickButton.on('click', function() {
     increase();
   });
@@ -252,10 +250,6 @@ $(document).ready(function() {
   // .on('click', function() {
   //
   // });
-
-
-
->>>>>>> working
 
 
   $('button.theme-button').on('click', function(e) {
