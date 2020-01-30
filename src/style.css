@@ -4,41 +4,17 @@
   --font-family: "Times New Roman", Times, serif;
 }
 
-.theme-main {
-  color: black;
-  background-color: white;
-
-}
-
-.theme-dark {
-  color: white;
-  background-color: #363636;
-}
-.theme-3 {
-  color: white;
-  /* background-image: linear-gradient(#4287f5,#424bf5); */
-  background-image: linear-gradient(#78a3ff,#787fff);
-  min-height: 100vh;
-  /* background-color: blue; */
-}
-
-.theme-4 {
-  color: red;
-  background-color: #ffe6e6;
-}
-
 body {
-  font-size: 100%;
-  background: var(--body-background);
+  font-size: 150%;
+  /* background: var(--body-background); */
   font-family: var(--font-family);
   color: var(--main-text-color)
 }
 
-#fps {
-  position: absolute;
-  top: 8px;
-  right: 16px;
-  font-size: 1.125;
+button {
+  /* color: inherit; */
+  font-size: 20px;
+  border-radius: 20%;
 }
 
 h2 {
@@ -54,6 +30,81 @@ div {
 
 p {
   /* font-size: 1.33; */
+}
+
+.theme-main {
+  color: black;
+  background-color: white;
+}
+
+.theme-main-button {
+  color: black;
+  background-color: #f0f0f0;
+}
+
+.theme-main-button:disabled {
+  color: #b4b4b4;
+  background-color: #f0f0f0;
+}
+
+
+.theme-dark {
+  color: white;
+  background-color: #363636;
+}
+
+.theme-dark-button {
+  color: white;
+  background-color: #727272;
+}
+
+.theme-dark-button:disabled {
+  color: #ffffff36;
+  background-color: #727272;
+}
+
+.theme-ocean {
+  color: white;
+  background-image: linear-gradient(#78a3ff,#787fff);
+  min-height: 100vh;
+}
+
+.theme-ocean-button {
+  color: white;
+  background-color: #507cff;
+  border-color: #4f93ff;
+}
+
+.theme-ocean-button:disabled {
+  color: #ffffff36;
+  background-color: #507cff;
+  border-color: #4f93ff;
+}
+
+.theme-red {
+  color: red;
+  background-color: #ffe6e6;
+}
+
+.theme-red-button {
+  color: red;
+  background-color: #ffe6e6;
+}
+
+.theme-red-button:disabled {
+  color: #ff000036;
+  background-color: #ffe6e6;
+}
+
+.theme-button {
+  border-radius: 15%;
+}
+
+#fps {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 1.125;
 }
 
 .main-heading {

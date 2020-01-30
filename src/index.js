@@ -19,7 +19,7 @@ let catLevel = 0;
 let frameCount = 0;
 let lastFrameCount = 0;
 let prevMS = new Date().getMilliseconds();
-
+let lastTheme = 'placeholder';
 // const catUpgradeText = [
 //   'Give cats treats for clicking',
 //   'Give cats lots of pets',
@@ -45,8 +45,10 @@ const themestoreButton = $("#themestore");
 
 
 // change active theme
-function changeTheme(id) {
-  $("body").attr('class', '').addClass(id);
+function changeTheme(theme) {
+  $("body").removeClass(lastTheme).addClass(theme);
+  $("button").removeClass(lastTheme + "-button").addClass(theme + "-button");
+  lastTheme = theme;
 }
 
 // clicking
@@ -87,7 +89,7 @@ function avgClickRate() {
 }
 
 
-// this auto buys clicks
+// one time unlock of auto buying
 function autoBuy() {
   autoBuying = true;
   autoBuySection.hide();
@@ -95,6 +97,7 @@ function autoBuy() {
 
 }
 
+// toggle autobuying on and off
 function autoBuyToggle() {
   if (autoBuying === true) {
     autoBuying = false;
@@ -106,6 +109,7 @@ function autoBuyToggle() {
   }
 }
 
+// adds a cat
 function hireCat() {
   catCount++;
   counter -= catCost;
@@ -114,6 +118,7 @@ function hireCat() {
   hireCatButton.text(catCost);
 }
 
+// this how cats click
 function catIncrease(count) {
   if (count > unusedClicks) {
     count = unusedClicks;
@@ -123,6 +128,7 @@ function catIncrease(count) {
   unusedClicks -= count;
 }
 
+// upgrading how much $$$ cats make
 function catUpgrade(level) {
 
 }
