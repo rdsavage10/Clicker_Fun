@@ -19,7 +19,7 @@ let catLevel = 0;
 let frameCount = 0;
 let lastFrameCount = 0;
 let prevMS = new Date().getMilliseconds();
-
+let lastTheme = 'placeholder';
 // const catUpgradeText = [
 //   'Give cats treats for clicking',
 //   'Give cats lots of pets',
@@ -27,7 +27,6 @@ let prevMS = new Date().getMilliseconds();
 //   'Increase cat treats',
 //   'Make a mouse click leaderboard for which cat has the most clicks',
 // ];
-
 //jquery variables
 const clickButton = $("#click");
 const buyClickButton = $("#buyClicks");
@@ -43,17 +42,17 @@ const fpsSpan = $('#fps');
 const autoBuyUnlockButton = $("#autoBuyUnlock");
 const themestoreButton = $("#themestore");
 
-
 // change active theme
-function changeTheme(id) {
-  $("body").attr('class', '').addClass(id);
+function changeTheme(theme) {
+  $("body").removeClass(lastTheme).addClass(theme);
+  $("button").removeClass(lastTheme + "-button").addClass(theme + "-button");
+  lastTheme = theme;
 }
 
 // clicking
 function increase() {
   counter += multiplier;
   total += multiplier;
-  unusedClicks--;
 }
 
 // buys clicks. duh.
@@ -87,7 +86,7 @@ function avgClickRate() {
 }
 
 
-// this auto buys clicks
+// one time unlock of auto buying
 function autoBuy() {
   autoBuying = true;
   autoBuySection.hide();
@@ -95,6 +94,7 @@ function autoBuy() {
 
 }
 
+// toggle autobuying on and off
 function autoBuyToggle() {
   if (autoBuying === true) {
     autoBuying = false;
@@ -106,14 +106,20 @@ function autoBuyToggle() {
   }
 }
 
+// adds a cat
 function hireCat() {
   catCount++;
   counter -= catCost;
   catCost += 25;
-  catCountSpan.text(catCount + " cats");
-  hireCatButton.text(catCost);
+  if (catCount === 1) {
+    catCountSpan.text("1 cat");
+  } else {
+    catCountSpan.text(catCount + " cats");
+  }
+  hireCatButton.text('$' + catCost);
 }
 
+// this how cats click
 function catIncrease(count) {
   if (count > unusedClicks) {
     count = unusedClicks;
@@ -123,6 +129,7 @@ function catIncrease(count) {
   unusedClicks -= count;
 }
 
+// upgrading how much $$$ cats make
 function catUpgrade(level) {
 
 }
@@ -135,7 +142,7 @@ function findFPS() {
       fpsSpan.text(frameCount);
     }
     lastFrameCount = frameCount;
-    frameCount = -1;
+    frameCount = 0;
   }
   frameCount++;
   prevMS = currentMS;
@@ -178,9 +185,11 @@ function button_update() {
 
 // main game loop
 function paint() {
+
   button_update();
-  //fps counter
+
   findFPS();
+
   //clicks per second
   if (loopTicks > 60) {
     loopTicks = 1;
@@ -188,6 +197,7 @@ function paint() {
   } else {
     loopTicks++;
   }
+
   //auto buying unused clicks
   if (autoBuying === true) {
     if (counter > clickCost && unusedClicks <= 30) {
@@ -215,46 +225,48 @@ function paint() {
   window.requestAnimationFrame(paint);
 }
 
-
 /* add all event listeners */
 $(document).ready(function() {
 
   clickButton.on('click', function() {
+    unusedClicks--;
     increase();
   });
 
+  hireCatButton.on('click', function() {
+    unusedClicks--;
+    hireCat();
+  });
+
   buyClickButton.on('click', function() {
+    unusedClicks--;
     buyClicks();
   });
 
   upgradeClickButton.on('click', function() {
+    unusedClicks--;
     upgradeClick();
   });
   autoBuyUnlockButton.on('click', function() {
+    unusedClicks--;
     autoBuy();
   });
   autoBuyToggleButton.on('click', function() {
+    unusedClicks--;
     autoBuyToggle();
   });
-  hireCatButton.on('click', function() {
-    hireCat();
+
+  $('button.buy-theme').on('click', function(e) {
+    buyTheme(e.currentTarget.id);
   });
-
-  // .on('click', function() {
-  //
-  // });
-
-
-
-
-  // .on('click', function() {
-  //
-  // });
-
 
   $('button.theme-button').on('click', function(e) {
     changeTheme(e.currentTarget.id);
+    unusedClicks--;
   });
 
+  // .on('click', function() {
+    //
+    // });
   window.requestAnimationFrame(paint);
 });
