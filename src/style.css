@@ -20,7 +20,7 @@ body {
 
 button {
   font-size: 20px;
-  border-radius: 20%;
+  border-radius: 20px;
 }
 
 h1 {
@@ -58,15 +58,24 @@ header {
   margin-top: 2rem ;
 }
 
+#themestore {
+  padding-bottom: 20px;
+  border-bottom: inset;
+}
+
+#themestore:empty {
+  display: none;
+}
+
 #clicking-section div {
   margin-left: 1rem;
 }
 
 #click {
   border-width: thick;
-  border-radius: 10%;
-  width: 12.5vw;
-  height: 6.25vw;
+  border-radius: 20px;
+  width: 12rem;
+  height: 6rem;
   margin: 2rem;
 }
 
@@ -137,7 +146,7 @@ header {
 }
 
 .theme-button {
-  border-radius: 15%;
+  border-radius: 20px;
 }
 
 #fps {
