@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-// lets declare some variables
+'use strict';
 let total = 0;
 let prevTotal = 0;
 let counter = 0;
@@ -15,7 +15,7 @@ let loopTicks = 1;
 let avgClicks = 0;
 let newClicks = 0;
 const avgArr = [];
-let catLevel = 0;
+// let catLevel = 0;
 let frameCount = 0;
 let lastFrameCount = 0;
 let prevMS = new Date().getMilliseconds();
@@ -27,53 +27,80 @@ let lastTheme = 'placeholder';
 //   'Increase cat treats',
 //   'Make a mouse click leaderboard for which cat has the most clicks',
 // ];
-//jquery variables
-const clickButton = $("#click");
-const buyClickButton = $("#buyClicks");
-const upgradeClickButton = $("#upgradeClick");
-const clickPerSecond = $('#avgClickSpan');
-// const clickPerMinute = $('#clickPerMinute');
-const autoBuySection = $('#autoBuySection');
-const autoBuyToggleSection = $('#autoBuyToggleSection');
-const autoBuyToggleButton = $('#autoBuyToggle');
-const catCountSpan = $('#catCount');
-const hireCatButton = $('#hireCat');
-const fpsSpan = $('#fps');
-const autoBuyUnlockButton = $("#autoBuyUnlock");
-const themestoreButton = $("#themestore");
+
+const $clickButton = $('#click');
+const $buyClickButton = $('#buyClicks');
+const $upgradeClickButton = $('#upgradeClick');
+const $clickPerSecond = $('#avgClickSpan');
+const $autoBuySection = $('#autoBuySection');
+const $autoBuyToggleSection = $('#autoBuyToggleSection');
+const $autoBuyToggleButton = $('#autoBuyToggle');
+const $catCountSpan = $('#catCount');
+const $hireCatButton = $('#hireCat');
+const $fpsSpan = $('#fps');
+const $autoBuyUnlockButton = $('#autoBuyUnlock');
+const $button = $('button');
+const $body = $('body');
+const $themeStore = $('#themestore');
+const $themeStoreButtons = $('button.buy-theme');
+const $themes = $('#themes');
+const $themeButtons = $('button.theme-button');
 
 // change active theme
 function changeTheme(theme) {
-  $("body").removeClass(lastTheme).addClass(theme);
-  $("button").removeClass(lastTheme + "-button").addClass(theme + "-button");
+
+  $body.removeClass(lastTheme)
+       .addClass(theme);
+  $button.removeClass(lastTheme + '-button')
+         .addClass(theme + '-button');
   lastTheme = theme;
+}
+
+function buyTheme(id) {
+
+  if ($themes.is(':hidden')) {
+    $themes.show();
+  }
+
+  $('#' + id).parent().remove();
+
+  if ($themeStore.find('.buy-theme').length === 0) {
+    $themeStore.remove();
+  }
+
+  id = id.slice(4);
+  $('#' + id).show();
 }
 
 // clicking
 function increase() {
+
   counter += multiplier;
   total += multiplier;
 }
 
-// buys clicks. duh.
+
 function buyClicks() {
+
   counter -= clickCost;
   unusedClicks += 2 * clickCost;
   clickCost += (Math.floor(clickCost * 0.125) + 1);
-  buyClickButton.text(clickCost);
+  $buyClickButton.text('$' + clickCost);
 }
 
 //upgrades click power
 function upgradeClick() {
+
   multiplier += 2;
   counter -= upgradeCost;
   upgradeCost = Math.floor(upgradeCost * 1.5);
-  upgradeClickButton.text(upgradeCost);
-  clickButton.text("+$" + multiplier);
+  $upgradeClickButton.text('$' + upgradeCost);
+  $clickButton.text('+$' + multiplier);
 }
 
 //revenue per minute
 function avgClickRate() {
+
   newClicks = total - prevTotal;
   prevTotal = total;
   avgArr.push(newClicks);
@@ -81,46 +108,49 @@ function avgClickRate() {
     avgArr.splice(0,1);
   }
   avgClicks = avgArr.reduce((a,b) => a + b) / avgArr.length ;
-  clickPerSecond.text(Math.round(avgClicks));
-  prevCounter = counter;
+  $clickPerSecond.text(Math.round(avgClicks));
 }
 
 
 // one time unlock of auto buying
-function autoBuy() {
+function unlockAutoBuy() {
+
   autoBuying = true;
-  autoBuySection.hide();
-  autoBuyToggleSection.show();
+  $autoBuySection.remove();
+  $autoBuyToggleSection.show();
 
 }
 
 // toggle autobuying on and off
-function autoBuyToggle() {
+function toggleAutoBuy() {
+
   if (autoBuying === true) {
     autoBuying = false;
     counter -= 50;
-    autoBuyToggleButton.text("Off");
+    $autoBuyToggleButton.text('Off');
   } else {
     autoBuying = true;
-    autoBuyToggleButton.text("On");
+    $autoBuyToggleButton.text('On');
   }
 }
 
 // adds a cat
 function hireCat() {
+
   catCount++;
   counter -= catCost;
   catCost += 25;
   if (catCount === 1) {
-    catCountSpan.text("1 cat");
+    $catCountSpan.text('1 cat');
   } else {
-    catCountSpan.text(catCount + " cats");
+    $catCountSpan.text(catCount + ' cats');
   }
-  hireCatButton.text('$' + catCost);
+  $hireCatButton.text('$' + catCost);
 }
 
 // this how cats click
 function catIncrease(count) {
+
   if (count > unusedClicks) {
     count = unusedClicks;
   }
@@ -130,16 +160,18 @@ function catIncrease(count) {
 }
 
 // upgrading how much $$$ cats make
-function catUpgrade(level) {
-
-}
+// function catUpgrade(level) {
+//
+//
+// }
 
 function findFPS() {
+
   // let prevMS = new Date().getMilliseconds();
   let currentMS = new Date().getMilliseconds();
   if (prevMS > currentMS) {
     if (frameCount !== lastFrameCount) {
-      fpsSpan.text(frameCount);
+      $fpsSpan.text(frameCount);
     }
     lastFrameCount = frameCount;
     frameCount = 0;
@@ -149,44 +181,48 @@ function findFPS() {
 
 }
 
-function button_update() {
+function buttonUpdate() {
+
   //flags for disabling buttons
-    if (unusedClicks < 1) {
-      clickButton.attr('disabled', true);
+    if (unusedClicks > 0 && unusedClicks > 0) {
+      $clickButton.attr('disabled', false);
     } else {
-      clickButton.attr('disabled', false);
+      $clickButton.attr('disabled', true);
     }
-    if (50 <= counter) {
-      autoBuyUnlockButton.attr('disabled', false);
+    if (50 <= counter && unusedClicks > 0) {
+      $autoBuyUnlockButton.attr('disabled', false);
     } else {
-      autoBuyUnlockButton.attr('disabled', true);
+      $autoBuyUnlockButton.attr('disabled', true);
     }
-    if (upgradeCost <= counter) {
-      upgradeClickButton.attr('disabled', false);
+    if (upgradeCost <= counter && unusedClicks > 0) {
+      $upgradeClickButton.attr('disabled', false);
     } else {
-      upgradeClickButton.attr('disabled', true);
+      $upgradeClickButton.attr('disabled', true);
     }
     if (clickCost <= counter) {
-      buyClickButton.attr('disabled', false);
+      $buyClickButton.attr('disabled', false);
     } else {
-      buyClickButton.attr('disabled', true);
+      $buyClickButton.attr('disabled', true);
     }
-    if (catCost <= counter) {
-      hireCatButton.attr('disabled', false);
+    if (catCost <= counter && unusedClicks > 0) {
+      $hireCatButton.attr('disabled', false);
     } else {
-      hireCatButton.attr('disabled', true);
+      $hireCatButton.attr('disabled', true);
     }
-    if (100 <= counter) {
-      themestoreButton.attr('disabled', false);
+    if (counter >= 150 && unusedClicks > 0) {
+      $themeStoreButtons.attr('disabled', false);
     } else {
-      themestoreButton.attr('disabled', true);
+      $themeStoreButtons.attr('disabled', true);
     }
+
+
+
 }
 
 // main game loop
 function paint() {
 
-  button_update();
+  buttonUpdate();
 
   findFPS();
 
@@ -215,52 +251,52 @@ function paint() {
   }
 
   // unhiding theme section
-  if ($('#themestore').is(":hidden") && counter >= 150) {
-    $("#themestore").show();
+  if ($('#themestore').is(':hidden') && counter >= 150) {
+    $('#themestore').show();
   }
 
   // updating numbers on screen
-  $("#wallet").text(counter);
-  $("#unusedClicks").text(unusedClicks);
+  $('#wallet').text(counter);
+  $('#unusedClicks').text(unusedClicks);
   window.requestAnimationFrame(paint);
 }
 
 /* add all event listeners */
 $(document).ready(function() {
 
-  clickButton.on('click', function() {
+  $clickButton.on('click', function() {
     unusedClicks--;
     increase();
   });
 
-  hireCatButton.on('click', function() {
+  $hireCatButton.on('click', function() {
     unusedClicks--;
     hireCat();
   });
 
-  buyClickButton.on('click', function() {
+  $buyClickButton.on('click', function() {
     unusedClicks--;
     buyClicks();
   });
 
-  upgradeClickButton.on('click', function() {
+  $upgradeClickButton.on('click', function() {
     unusedClicks--;
     upgradeClick();
   });
-  autoBuyUnlockButton.on('click', function() {
+  $autoBuyUnlockButton.on('click', function() {
     unusedClicks--;
-    autoBuy();
+    unlockAutoBuy();
   });
-  autoBuyToggleButton.on('click', function() {
+  $autoBuyToggleButton.on('click', function() {
     unusedClicks--;
-    autoBuyToggle();
+    toggleAutoBuy();
   });
 
-  $('button.buy-theme').on('click', function(e) {
+  $themeStoreButtons.on('click', function(e) {
     buyTheme(e.currentTarget.id);
   });
 
-  $('button.theme-button').on('click', function(e) {
+  $themeButtons.on('click', function(e) {
     changeTheme(e.currentTarget.id);
     unusedClicks--;
   });
